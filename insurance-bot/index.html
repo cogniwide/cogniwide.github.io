@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>XYZ National | Virtual Assistant</title>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+    <link
+        href="https://www.raven360.com/hs-fs/hub/164692/hub_generated/template_assets/9515692667/1572933505626/Market8/theme/cr_m8_modules_styles_2018.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    
+
+</head>
+
+<body>
+    <div class="chat_btn_container position-fixed">
+        <button class="btn btn-primary border-25 border-0">XYZ Virtual Assistant</button>
+    </div>
+    <div class="chat_box_container position-relative">
+        <div class="col-md-12 p-0 h-100">
+            <div class="panel panel-primary">
+                <div class="panel-heading d-flex justify-content-between align-items-center px-2 bg-primary">
+                    <span class="text-white font-weight-bold"> XYZ Virtual Assistant</span>
+                    <div class="btn-group pull-right">
+                        <a href="javascript:;" class="restart" style="width: 20px;margin-top:3px;">
+                            <img src="img/update-arrow.png" alt="refresh" class="img-responsive" width="15">
+                        </a>
+                        <button type="button" class="close" aria-label="Close" style="width: 20px;">
+                            <!-- <img src="img/close.png" alt="refresh" class="img-responsive" width="12"> -->
+                            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat">
+                    </ul>
+                </div>
+                <div class="panel-footer position-fixed">
+                    <div class="suggestion_box bg-white">
+                        <div class="d-flex flex-row quick-replies">
+                        </div>
+                    </div>
+                    <div id="composer"
+                        class="composer justify-content-between align-items-center position-relative">
+                        <textarea id="textInput" class="textInput" placeholder="Type an answer"></textarea>
+                        <pre class="send-button text-white"></pre>
+                        <pre class="mic-btn text-white"></pre>
+                    </div>
+                    <div class="fileupload justify-content-between align-items-center position-relative">
+                        <label for="file-upload" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> Custom Upload
+                            </label>
+                            <input id="file-upload" type="file" value=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script id="template_left" type="x-tmpl-mustache">
+                                        <li class="left">
+                                                <div class="d-flex justify-content-start">
+                                                   
+                                                        <span class="avatar_wrapper mr-2">
+                                                                {{#show_avatar}}
+                                                                    <img src="img/user.png" alt="User Avatar"
+                                                                        class="img-circle avatar">
+                                                                {{/show_avatar}}
+                                                        </span>
+                                                    
+                                                    <div class="chat-body bubble clearfix flex-column">
+                                                        {{#show_header}}
+                                                            <div class="header">
+                                                                <strong class="primary-font">Jack Sparrow</strong>
+                                                            </div>
+                                                        {{/show_header}}
+
+                                                        {{#show_text}}
+                                                            <div class="content">
+                                                                <p>
+                                                                    {{{message.text}}}
+                                                                </p>
+                                                            </div>
+                                                        {{/show_text}}
+
+                                                        {{#show_image}}
+                                                            <p>
+                                                                <img src="{{message.image}}" alt="" width="250" height="200">
+                                                            </p>
+                                                        {{/show_image}}
+
+                                                        {{#show_video}}
+                                                        <p>
++                                                        </p>
+                                                        {{/show_video}}
+
+                                                        {{#show_audio}}
+                                                            <audio controls ="controls" id = "player">
+                                                                <source src = "{{message.audio}}" />
+                                                                <p> Could'nt load audio </p>
+                                                            </audio>
+                                                        {{/show_audio}}
+                                                        
+                                                       {{#show_buttons}}
+                                                            <span class="mt-2 d-flex flex-column">
+                                                                    {{#message.buttons}}
+                                                                    <button type="button" id="quick_reply_btn"
+                                                                    class="btn btn-outline-info text-left my-2 see_all pl-4 bg-white" data="{{val}}">{{text}}</button>
+                                                                    {{/message.buttons}}
+                                                                
+                                                            </span>
+                                                        {{/show_buttons}}
+
+
+                                                        {{#show_rating}}                                                        
+                                                            <div class='rating-stars text-center'>
+                                                                <ul id='stars'>
+                                                                    <li class='star' title='Poor' data-value='1'>
+                                                                        <i class='fa fa-star fa-fw'></i>
+                                                                    </li>
+                                                                    <li class='star' title='Fair' data-value='2'>
+                                                                        <i class='fa fa-star fa-fw'></i>
+                                                                    </li>
+                                                                    <li class='star' title='Good' data-value='3'>
+                                                                        <i class='fa fa-star fa-fw'></i>
+                                                                    </li>
+                                                                    <li class='star' title='Excellent' data-value='4'>
+                                                                        <i class='fa fa-star fa-fw'></i>
+                                                                    </li>
+                                                                    <li class='star' title='WOW!!!' data-value='5'>
+                                                                        <i class='fa fa-star fa-fw'></i>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        {{/show_rating}}
+
+                                                    </div>
+                                                </div>
+                                                <!-- {{#show_time}}
+                                                    <small><span class="time d-block ft_10 ml-1 text-info p-1">{{time_ago}}</span></small>
+                                                {{/show_time}} -->
+                                            </li>
+                                </script>
+
+
+    <script id="template_right" type="x-tmpl-mustache">
+    <li class="right">
+            <div class="d-flex justify-content-strat flex-row-reverse">
+                <div class="chat-body bubble clearfix flex-column">
+                    <p>
+                            {{message}}
+                    </p>
+                </div>
+            </div>
+            {{#show_time}}
+                <small class="right-time"><span class="time d-block ft_10 ml-1 text-info p-1">12 mins ago</span></small>
+            {{/show_time}}
+
+        </li>
+  </script>
+
+    <script id="template_reply" type="x-tmpl-mustache">
+        <button type="button" id="quick_reply_btn" class="btn btn-outline-info text-left mx-2 see_all pl-4 bg-white" data="{{value}}">{{text}}</button>
+  </script>
+
+    <script src="js/app.js"></script>
+    <script src="js/jquery.timeago.js"></script>
+    
+</body>
+
+</html>
